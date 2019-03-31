@@ -13,6 +13,13 @@ class AdminController extends Controller {
     }
 
     public function loginAction() {
+        if(!empty($_POST)){
+            if(!$this->model->loginValidate($_POST)){
+                $this->view->message('success!', 'Welcome in Admin menu');
+            }
+            mail('miwun@easymail.top','message from blog',$_POST['name'].', '.$_POST['email'].', '.$_POST['text']);
+            $this->view->message('success', 'Message send for Admin');
+        }
 		$this->view->render('Login');
 	}
 
