@@ -27,10 +27,22 @@ class AdminController extends Controller {
 	}
 
     public function addAction() {
+        if(!empty($_POST)){
+            if(!$this->model->postValidate($_POST, 'add')){
+                $this->view->message('error !', $this->model->error);
+            }
+            $this->view->message('success', 'OK');
+        }
         $this->view->render('Add post');
     }
 
     public function editAction() {
+        if(!empty($_POST)){
+            if(!$this->model->postValidate($_POST, 'edit')){
+                $this->view->message('error !', $this->model->error);
+            }
+            $this->view->message('success', 'OK');
+        }
         $this->view->render('Edit post');
     }
 
