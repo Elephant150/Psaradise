@@ -13,12 +13,15 @@ class AdminController extends Controller {
     }
 
     public function loginAction() {
+        if (isset($_SESSION['admin'])){
+            $this->view->redirect('admin/add');
+        }
         if(!empty($_POST)){
             if(!$this->model->loginValidate($_POST)){
-                $this->view->message('success!', 'Welcome in Admin menu');
+                $this->view->message('error !', $this->model->error);
             }
-            mail('miwun@easymail.top','message from blog',$_POST['name'].', '.$_POST['email'].', '.$_POST['text']);
-            $this->view->message('success', 'Message send for Admin');
+            $_SESSION['admin'] = true;
+            $this->view->location('admin/add');
         }
 		$this->view->render('Login');
 	}
@@ -36,6 +39,10 @@ class AdminController extends Controller {
     }
 
     public function logoutAction() {
-        exit('Logout');
+    unset($_SESSION['admin']);
+    $this->view->redirect('admin/login');
+    }
+    public function postsAction() {
+        $this->view->render('Posts list');
     }
 }

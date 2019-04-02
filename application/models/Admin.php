@@ -7,7 +7,11 @@ use application\core\Model;
 class Admin extends Model {
     public $error;
     public function loginValidate($post){
-            $this->error = 'Error';
+        $config = require 'application/config/admin.php';
+        if($config['login'] != $post['login'] and $config['password'] != $post['password']){
+            $this->error = 'Login or password incorrect';
+            return false;
+        }
         return true;
     }
 }

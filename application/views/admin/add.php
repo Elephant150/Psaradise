@@ -11,11 +11,11 @@
                                 <input class="form-control" type="text" name="name">
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Breed</label>
                                 <input class="form-control" type="text" name="description">
                             </div>
                             <div class="form-group">
-                                <label>Text</label>
+                                <label>Information about</label>
                                 <textarea class="form-control" rows="3" name="text"></textarea>
                             </div>
                             <div class="form-group">

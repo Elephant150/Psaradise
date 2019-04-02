@@ -38,5 +38,9 @@ return [
     'admin/delete' => [
         'controller' => 'admin',
         'action' => 'delete',
+    ],
+    'admin/posts' => [
+        'controller' => 'admin',
+        'action' => 'posts',
     ]
 ];
