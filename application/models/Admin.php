@@ -3,6 +3,7 @@
 namespace application\models;
 
 use application\core\Model;
+use http\Params;
 
 class Admin extends Model
 {
@@ -40,6 +41,53 @@ class Admin extends Model
         }
 
         return true;
+    }
+
+    public function postAdd($post){
+        $params = [
+            'id' => null,
+            'name' => $post['name'],
+            'description' => $post['description'],
+            'text' => $post['text']
+        ];
+        $this->db->query(/** @lang text */ "INSERT INTO posts VALUE (:id, :name, :description, :text)", $params);
+        return $this->db->lastInsertId();
+    }
+
+    public function postEdit($post, $id){
+        $params = [
+            'id' => $id,
+            'name' => $post['name'],
+            'description' => $post['description'],
+            'text' => $post['text']
+        ];
+        $this->db->query(/** @lang text */ "UPDATE posts SET name = :name, description = :description, text = :text WHERE id = :id", $params);
+    }
+
+    public function postUploadImage($path, $id){
+        move_uploaded_file($path, 'public/materials/'.$id.'.jpg');
+    }
+
+    public function isPostExists($id){
+        $params = [
+          'id' => $id,
+        ];
+        return $this->db->column(/** @lang text */ 'SELECT id FROM posts WHERE id = :id', $params);
+    }
+
+    public function postDelete($id){
+        $params = [
+            'id' => $id,
+        ];
+        $this->db->query(/** @lang text */ 'DELETE FROM posts WHERE id = :id', $params);
+        unlink('public/materials/'.$id.'.jpg');
+    }
+
+    public function postData ($id){
+        $params = [
+            'id' => $id,
+        ];
+        return $this->db->row(/** @lang text */ 'SELECT * FROM posts WHERE id = :id', $params);
     }
 }
 

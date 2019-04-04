@@ -31,7 +31,12 @@ class AdminController extends Controller {
             if(!$this->model->postValidate($_POST, 'add')){
                 $this->view->message('error !', $this->model->error);
             }
-            $this->view->message('success', 'OK');
+            $id = $this->model->postAdd($_POST);
+            if(!$id){
+                $this->view->message('error', 'Error query processing');
+            }
+            $this->model->postUploadImage($_FILES['img']['tmp_name'], $id);
+            $this->view->message('success', 'Post added');
         }
         $this->view->render('Add post');
     }
@@ -41,13 +46,24 @@ class AdminController extends Controller {
             if(!$this->model->postValidate($_POST, 'edit')){
                 $this->view->message('error !', $this->model->error);
             }
-            $this->view->message('success', 'OK');
+            $this->model->postEdit($_POST, $this->route['id']);
+            if($_FILES['img']['tmp_name']){
+                $this->model->postUploadImage($_FILES['img']['tmp_name'], $this->route['id']);
+            }
+            $this->view->message('success', 'Data saved');
         }
-        $this->view->render('Edit post');
+        $vars = [
+          'data' => $this->model->postData($this->route['id'])[0],
+        ];
+        $this->view->render('Edit post', $vars);
     }
 
     public function deleteAction() {
-	    exit('Delete');
+        if(!$this->model->isPostExists($this->route['id'])){
+            $this->view->errorCode(404);
+        }
+        $this->model->postDelete($this->route['id']);
+        $this->view->redirect('admin/posts');
     }
 
     public function logoutAction() {
