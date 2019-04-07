@@ -3,6 +3,8 @@
 namespace application\controllers;
 
 use application\core\Controller;
+use application\lib\Pagination;
+use application\models\Main;
 
 class AdminController extends Controller {
 
@@ -35,27 +37,30 @@ class AdminController extends Controller {
             if(!$id){
                 $this->view->message('error', 'Error query processing');
             }
-            $this->model->postUploadImage($_FILES['img']['tmp_name'], $id);
             $this->view->message('success', 'Post added');
+            $this->model->postUploadImage($_FILES['img']['tmp_name'], $id);
         }
         $this->view->render('Add post');
     }
 
     public function editAction() {
-        if(!empty($_POST)){
-            if(!$this->model->postValidate($_POST, 'edit')){
-                $this->view->message('error !', $this->model->error);
+        if (!$this->model->isPostExists($this->route['id'])) {
+            $this->view->errorCode(404);
+        }
+        if (!empty($_POST)) {
+            if (!$this->model->postValidate($_POST, 'edit')) {
+                $this->view->message('error', $this->model->error);
             }
             $this->model->postEdit($_POST, $this->route['id']);
-            if($_FILES['img']['tmp_name']){
+            if ($_FILES['img']['tmp_name']) {
                 $this->model->postUploadImage($_FILES['img']['tmp_name'], $this->route['id']);
             }
-            $this->view->message('success', 'Data saved');
+            $this->view->message('success', 'Сохранено');
         }
         $vars = [
-          'data' => $this->model->postData($this->route['id'])[0],
+            'data' => $this->model->postData($this->route['id'])[0],
         ];
-        $this->view->render('Edit post', $vars);
+        $this->view->render('Редактировать пост', $vars);
     }
 
     public function deleteAction() {
@@ -71,6 +76,12 @@ class AdminController extends Controller {
     $this->view->redirect('admin/login');
     }
     public function postsAction() {
-        $this->view->render('Posts list');
+        $mainModel = new Main();
+        $pagination = new Pagination($this->route, $mainModel->postsCount());
+        $vars = [
+            'pagination' => $pagination->get(),
+            'list' => $mainModel->postsList($this->route),
+        ];
+        $this->view->render('Posts list', $vars);
     }
 }

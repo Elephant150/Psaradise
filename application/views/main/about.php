@@ -4,7 +4,7 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="page-heading">
                     <h1>Psaradise Inc.</h1>
-                    <span class="subheading">small title</span>
+                    <span class="subheading">Blog about dogs</span>
                 </div>
             </div>
         </div>
@@ -13,7 +13,9 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <p>Information about us</p>
+            <h1>Information about us</h1>
+            <br>
+            <h3>Our team consists <br> Bogdan Saichishin - PM <br> Serhii Revitskiy - admin <br> Denis Shapoval - frontend <br> Vitaly Dmytruk - backend</h3>
         </div>
     </div>
 </div>

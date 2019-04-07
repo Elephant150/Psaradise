@@ -4,6 +4,7 @@ namespace application\models;
 
 use application\core\Model;
 use http\Params;
+use Imagick;
 
 class Admin extends Model
 {
@@ -45,7 +46,7 @@ class Admin extends Model
 
     public function postAdd($post){
         $params = [
-            'id' => null,
+            'id' => '',
             'name' => $post['name'],
             'description' => $post['description'],
             'text' => $post['text']
@@ -64,7 +65,16 @@ class Admin extends Model
         $this->db->query(/** @lang text */ "UPDATE posts SET name = :name, description = :description, text = :text WHERE id = :id", $params);
     }
 
+    /**
+     * @param $path
+     * @param $id
+     * @throws \ImagickException
+     */
     public function postUploadImage($path, $id){
+//        $img = new Imagick($path);
+//        $img->cropThumbnailImage(1080, 600);
+//        $img->setImageCompressionQuality(80);
+//        $img->writeImage('public/materials/'.$id.'.jpg');
         move_uploaded_file($path, 'public/materials/'.$id.'.jpg');
     }
 
@@ -83,7 +93,7 @@ class Admin extends Model
         unlink('public/materials/'.$id.'.jpg');
     }
 
-    public function postData ($id){
+    public function postData($id) {
         $params = [
             'id' => $id,
         ];

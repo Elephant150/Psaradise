@@ -6,6 +6,10 @@ return [
 		'controller' => 'main',
 		'action' => 'index',
 	],
+    'main/index/{page:\d+}' => [
+        'controller' => 'main',
+        'action' => 'index',
+    ],
     'about' => [
         'controller' => 'main',
         'action' => 'about',
@@ -38,6 +42,10 @@ return [
     'admin/delete/{id:\d+}' => [
         'controller' => 'admin',
         'action' => 'delete',
+    ],
+    'admin/posts/{page:\d+}' => [
+        'controller' => 'admin',
+        'action' => 'posts',
     ],
     'admin/posts' => [
         'controller' => 'admin',

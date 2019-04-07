@@ -1,11 +1,14 @@
 <div class="content-wrapper">
     <div class="container-fluid">
         <div class="card mb-3">
-            <div class="card-header"><?php echo $title; ?></div>
+            <div class="card-header"><?php if (isset($title)) {
+                    echo $title;
+                } ?></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-4">
-                        <form action="/admin/edit/<?= $data['id']; ?>" method="post" >
+                        <form action="/admin/edit/<?php /** @var TYPE_NAME $data */
+                        echo $data['id']; ?>" method="post" >
                             <div class="form-group">
                                 <label>Name</label>
                                 <input class="form-control" type="text" value="<?= htmlspecialchars($data['name'], ENT_QUOTES); ?>" name="name">

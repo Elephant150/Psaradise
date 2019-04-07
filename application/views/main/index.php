@@ -26,10 +26,12 @@
                     </div>
                     <hr>
                 <?php endforeach; ?>
-                <div class="clearfix">
-                    <?php echo $pagination; ?>
-                </div>
+            <div class="clearfix">
+                <?php if (isset($pagination)) {
+                    echo $pagination;
+                } ?>
             <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>
