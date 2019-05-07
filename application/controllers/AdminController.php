@@ -55,12 +55,12 @@ class AdminController extends Controller {
             if ($_FILES['img']['tmp_name']) {
                 $this->model->postUploadImage($_FILES['img']['tmp_name'], $this->route['id']);
             }
-            $this->view->message('success', 'Сохранено');
+            $this->view->message('success', 'Save');
         }
         $vars = [
             'data' => $this->model->postData($this->route['id'])[0],
         ];
-        $this->view->render('Редактировать пост', $vars);
+        $this->view->render('Edit post', $vars);
     }
 
     public function deleteAction() {

@@ -26,6 +26,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/about">About</a>
                         </li>
+			<li class="nav-item">
+                            <a class="nav-link" href="http://chat.psaradise.kl.com.ua/">Chat</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/contacts">Contacts</a>
                         </li>
